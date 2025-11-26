@@ -17,7 +17,8 @@ public class MemberPersistenceAdapter implements
 	@Override
 	public void saveMember(Member member) {
 		if (!memberRepository.existsByProviderId(member.getProviderId())) {
-			memberRepository.save(memberMapper.toJpaEntity(member));
+			MemberJpaEntity memberEntity = memberMapper.toJpaEntity(member);
+			memberRepository.save(memberEntity);
 		}
 	}
 }

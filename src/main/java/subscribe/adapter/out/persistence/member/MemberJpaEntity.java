@@ -2,6 +2,7 @@ package subscribe.adapter.out.persistence.member;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -14,7 +15,7 @@ import subscribe.adapter.out.persistence.BaseTimeEntity;
 public class MemberJpaEntity extends BaseTimeEntity {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String providerId;

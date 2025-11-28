@@ -5,25 +5,27 @@ import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 import subscribe.application.exception.CustomException;
 import subscribe.application.exception.ErrorCode;
-import subscribe.application.member.port.out.SaveMemberPort;
+import subscribe.application.member.port.out.SyncMemberPort;
 import subscribe.application.member.port.out.UpdateMemberPort;
 import subscribe.domain.member.Member;
 
 @Component
 @RequiredArgsConstructor
 public class MemberPersistenceAdapter implements
-	SaveMemberPort,
+	SyncMemberPort,
 	UpdateMemberPort {
 
 	private final SpringDataMemberRepository memberRepository;
 	private final MemberMapper memberMapper;
 
 	@Override
-	public void saveMember(Member member) {
-		if (!memberRepository.existsByProviderId(member.getProviderId())) {
-			MemberJpaEntity memberEntity = memberMapper.toJpaEntity(member);
-			memberRepository.save(memberEntity);
-		}
+	public Long syncMember(Member member) {
+		return memberRepository.findByProviderId(member.getProviderId())
+			.map(MemberJpaEntity::getId)
+			.orElseGet(() -> {
+				MemberJpaEntity memberEntity = memberMapper.toJpaEntity(member);
+				return memberRepository.save(memberEntity).getId();
+			});
 	}
 
 	@Override

@@ -6,20 +6,20 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import subscribe.application.member.port.in.OAuth2UserInfo;
 import subscribe.application.member.port.in.OAuth2UserSyncUseCase;
-import subscribe.application.member.port.out.SaveMemberPort;
+import subscribe.application.member.port.out.SyncMemberPort;
 import subscribe.domain.member.Member;
 
 @Service
 @RequiredArgsConstructor
 public class OAuth2UserSyncService implements OAuth2UserSyncUseCase {
 
-	private final SaveMemberPort saveMemberPort;
+	private final SyncMemberPort syncMemberPort;
 
 	@Transactional
 	@Override
-	public void syncOAuth2User(OAuth2UserInfo oAuth2UserInfo) {
+	public Long syncOAuth2User(OAuth2UserInfo oAuth2UserInfo) {
 		Member member = oAuth2UserInfo.toMember();
 
-		saveMemberPort.saveMember(member);
+		return syncMemberPort.syncMember(member);
 	}
 }

@@ -2,7 +2,7 @@ package subscribe.application.member.port.out;
 
 import subscribe.domain.member.Member;
 
-public interface SaveMemberPort {
+public interface SyncMemberPort {
 
-	void saveMember(Member member);
+	Long syncMember(Member member);
 }

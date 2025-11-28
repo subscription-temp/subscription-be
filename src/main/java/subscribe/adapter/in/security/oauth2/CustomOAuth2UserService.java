@@ -23,8 +23,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		KakaoUserInfo kakaoUserInfo = KakaoUserInfo.from(oAuth2User.getAttributes());
 		OAuth2UserInfo oAuth2UserInfo = kakaoUserInfo.toOAuth2UserInfo();
 
-		oAuth2UserSyncUseCase.syncOAuth2User(oAuth2UserInfo);
+		Long memberId = oAuth2UserSyncUseCase.syncOAuth2User(oAuth2UserInfo);
 
-		return oAuth2User;
+		return new CustomOAuth2User(memberId);
 	}
 }

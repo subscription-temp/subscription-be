@@ -28,16 +28,16 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		HttpServletResponse response,
 		Authentication authentication
 	) throws IOException {
-		OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
-		String providerId = oAuth2User.getName();
+		OAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
+		Long memberId = Long.valueOf(oAuth2User.getName());
 
-		String accessToken = jwtManager.createAccessToken(providerId, new Date());
+		String accessToken = jwtManager.createAccessToken(memberId, new Date());
 
-		String refreshToken = jwtManager.createRefreshToken(providerId, new Date());
+		String refreshToken = jwtManager.createRefreshToken(memberId, new Date());
 		tokenCrudService.saveRefreshToken(
 			new RefreshToken(
 				refreshToken,
-				jwtManager.getProviderId(refreshToken),
+				jwtManager.getMemberId(refreshToken),
 				jwtManager.getIssuedAt(refreshToken),
 				jwtManager.getExpiration(refreshToken)
 			)

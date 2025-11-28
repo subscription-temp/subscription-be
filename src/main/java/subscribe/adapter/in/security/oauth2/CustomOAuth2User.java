@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomOAuth2User implements OAuth2User {
 
-	private final String providerId;
+	private final Long memberId;
 
 	@Override
 	public Map<String, Object> getAttributes() {
@@ -26,6 +26,6 @@ public class CustomOAuth2User implements OAuth2User {
 
 	@Override
 	public String getName() {
-		return this.providerId;
+		return memberId.toString();
 	}
 }

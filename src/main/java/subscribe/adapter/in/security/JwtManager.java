@@ -31,26 +31,24 @@ public class JwtManager {
 		);
 	}
 
-	public String createAccessToken(String providerId, Date now) {
-		return Jwts.builder()
-			.subject(providerId)
-			.issuedAt(now)
-			.expiration(new Date(now.getTime() + ACCESS_TOKEN_EXPIRATION_TIME))
-			.signWith(secretKey)
-			.compact();
+	public String createAccessToken(Long memberId, Date now) {
+		return createToken(
+			memberId,
+			now,
+			ACCESS_TOKEN_EXPIRATION_TIME
+		);
 	}
 
-	public String createRefreshToken(String providerId, Date now) {
-		return Jwts.builder()
-			.subject(providerId)
-			.issuedAt(now)
-			.expiration(new Date(now.getTime() + REFRESH_TOKEN_EXPIRATION_TIME))
-			.signWith(secretKey)
-			.compact();
+	public String createRefreshToken(Long memberId, Date now) {
+		return createToken(
+			memberId,
+			now,
+			REFRESH_TOKEN_EXPIRATION_TIME
+		);
 	}
 
-	public String getProviderId(String token) {
-		return getAllClaims(token).getSubject();
+	public Long getMemberId(String token) {
+		return Long.valueOf(getAllClaims(token).getSubject());
 	}
 
 	public Date getIssuedAt(String token) {
@@ -73,6 +71,19 @@ public class JwtManager {
 		if (getExpiration(token).before(now)) {
 			throw new CustomException(ErrorCode.TOKEN_EXPIRED);
 		}
+	}
+
+	private String createToken(
+		Long memberId,
+		Date now,
+		Long tokenExpirationTime
+	) {
+		return Jwts.builder()
+			.subject(memberId.toString())
+			.issuedAt(now)
+			.expiration(new Date(now.getTime() + tokenExpirationTime))
+			.signWith(secretKey)
+			.compact();
 	}
 
 	private Claims getAllClaims(String token) {

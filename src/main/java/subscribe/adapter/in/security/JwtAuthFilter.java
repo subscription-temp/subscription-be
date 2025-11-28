@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -45,8 +44,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 			return;
 		}
 
-		OAuth2User oAuth2User = new CustomOAuth2User(
-			jwtManager.getProviderId(accessToken)
+		CustomOAuth2User oAuth2User = new CustomOAuth2User(
+			jwtManager.getMemberId(accessToken)
 		);
 
 		SecurityContextHolder.getContext().setAuthentication(

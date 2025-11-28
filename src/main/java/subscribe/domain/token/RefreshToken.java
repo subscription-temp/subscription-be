@@ -9,7 +9,7 @@ public class RefreshToken {
 
 	private String token;
 
-	private String providerId;
+	private Long memberId;
 
 	private Date issuedAt;
 
@@ -17,12 +17,12 @@ public class RefreshToken {
 
 	public RefreshToken(
 		String token,
-		String providerId,
+		Long memberId,
 		Date issuedAt,
 		Date expiration
 	) {
 		this.token = token;
-		this.providerId = providerId;
+		this.memberId = memberId;
 		this.issuedAt = issuedAt;
 		this.expiration = expiration;
 	}

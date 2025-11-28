@@ -24,8 +24,11 @@ public class MemberCrudController {
 		@AuthenticationPrincipal OAuth2User oAuth2User,
 		@RequestBody UpdateMemberRequest request
 	) {
-		String providerId = oAuth2User.getName();
-		updateMemberUseCase.updateMember(providerId, request);
+		Long memberId = Long.valueOf(oAuth2User.getName());
+		updateMemberUseCase.updateMember(
+			memberId,
+			request
+		);
 
 		return ResponseEntity
 			.noContent()

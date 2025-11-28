@@ -30,7 +30,7 @@ public class MemberPersistenceAdapter implements
 
 	@Override
 	public void updateMember(Member member) {
-		MemberJpaEntity memberEntity = memberRepository.findByProviderId(member.getProviderId())
+		MemberJpaEntity memberEntity = memberRepository.findById(member.getId())
 			.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
 		memberEntity.update(

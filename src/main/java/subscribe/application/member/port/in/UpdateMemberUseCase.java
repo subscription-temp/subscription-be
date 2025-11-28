@@ -2,5 +2,5 @@ package subscribe.application.member.port.in;
 
 public interface UpdateMemberUseCase {
 
-	void updateMember(String providerId, UpdateMemberRequest request);
+	void updateMember(Long memberId, UpdateMemberRequest request);
 }

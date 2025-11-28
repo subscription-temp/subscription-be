@@ -17,9 +17,10 @@ public class MemberCrudService implements UpdateMemberUseCase {
 
 	@Transactional
 	@Override
-	public void updateMember(String providerId, UpdateMemberRequest request) {
-		Member member = Member.withoutId(
-			providerId,
+	public void updateMember(Long memberId, UpdateMemberRequest request) {
+		Member member = Member.withId(
+			memberId,
+			null,
 			request.nickname(),
 			request.email()
 		);
